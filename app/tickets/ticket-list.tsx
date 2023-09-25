@@ -3,6 +3,8 @@ import { ITicketDto } from "../dto/ticket";
 import Link from "next/link";
 
 const getTickts = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const res = await fetch("http://localhost:3500/tickets", {
     next: {
       revalidate: 0,

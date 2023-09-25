@@ -3,6 +3,8 @@ import React from "react";
 import { notFound } from "next/navigation";
 
 export const generateStaticParams = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const res = await fetch("http://localhost:3500/tickets");
 
   const tickets = (await res.json()) as ITicketDto[];

@@ -1,4 +1,14 @@
+import { ITicketDto } from "@/app/dto/ticket";
 import React from "react";
+import { notFound } from "next/navigation";
+
+export const generateStaticParams = async () => {
+  const res = await fetch("http://localhost:3500/tickets");
+
+  const tickets = (await res.json()) as ITicketDto[];
+
+  return tickets.map((ticket) => ({ id: ticket.id }));
+};
 
 const getTickt = async (id: string) => {
   const res = await fetch(`http://localhost:3500/tickets/${id}`, {
@@ -6,6 +16,8 @@ const getTickt = async (id: string) => {
       revalidate: 60,
     },
   });
+
+  if (!res.ok) notFound();
 
   return res.json();
 };
